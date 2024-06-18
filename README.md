@@ -32,10 +32,7 @@ What if we can modify our SNI and gain access to different sites? Yes! we can. H
 To do so, we need to install a proxy on our server and enable TLS encryption. We can use an SSH tunnel to access a proxy that is already installed on the server. And stunnel can be used to add TLS encryption to that connection.
 <img src="./static/stunnel.png" width="80%">
 
-
-
-# Linux
-## Server Side
+# Server Side
 1. **Open Ports** :
    - Ensure that ports `22` and `443` are open on your server.
 
@@ -69,6 +66,7 @@ To do so, we need to install a proxy on our server and enable TLS encryption. We
    /etc/init.d/stunnel4 restart
    ```
    Source : <a href="https://www.digitalocean.com/community/tutorials/how-to-set-up-an-ssl-tunnel-using-stunnel-on-ubuntu" target="_blank">How To Set Up an SSL Tunnel Using Stunnel</a>
+# Linux
 ## Client Side 
 
 1. **Clone the repository** :
@@ -131,3 +129,41 @@ To do so, we need to install a proxy on our server and enable TLS encryption. We
    proxychains4 firefox
    ```
 
+# Windows
+## Client Side 
+
+1. **Clone the repository** :
+   ```bash
+   git clone https://github.com/kirula0626/sni-injector.git
+   ```
+2. **Add your SNI host and ssh host to `settings.ini`** : 
+   ```bash
+   [ssh]
+   #Host must be your Server Public IP address
+   #example host = 10.29.22.33
+   host = [SERVER_PUBLIC_IP]
+
+   [sni]
+   #example server_name = facebook.com
+   server_name = <SNI>
+   ```
+3. **Install the Requirements** :
+   - To Requirements need `python` and `pip`
+   ```bash
+   pip install -r requirements.txt
+   ```
+4. **Install `Nmap`** :
+   - Windows don't have `nc`. `Nmap` provides `ncat`
+   - Nmap : <a href="https://nmap.org/download.html#windows" traget="_blank">Windows Download Page</a>
+5. **Run `main.py' file** :
+   ```makefile
+   python main.py
+   ```
+6. **Run `ssh`** :
+   - Windows don't have `sshpass`. Manual Method using `ssh`. To establish connection type `[SERVER_SSH_PASSWORD]` 
+   ```bash
+   ssh -C -o "ProxyCommand=ncat --verbose --proxy 127.0.0.1:9092 %h %p" [SERVER_USERNAME]@[SERVER_PUBLIC_IP] -p 443 -CND 1080 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
+   ```
+7. **Use** :
+   - Active proxy on Browser (`firefox`) : Add SOCKS Host : `127.0.0.1` Port : `1080` and Select `SOCKSv5` 
+   
