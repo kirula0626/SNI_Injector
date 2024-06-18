@@ -1,4 +1,4 @@
-# Python SSH SSL SNI Injector For Free Internet [HTTP Injector]
+# SNI Injector TCP over SSL Tunnel - python alternative HTTP Injector for Linux
 
 <p align="center">
    <a href="#installation">Installation & Usage</a>
