@@ -1,4 +1,4 @@
-# SNI Injector TCP over SSL Tunnel - python alternative HTTP Injector for Linux
+# SNI Injector TCP over SSL Tunnel - python alternative HTTP Injector for Linux & Windows
 
 <p align="center">
    <a href="#installation">Installation & Usage</a>
