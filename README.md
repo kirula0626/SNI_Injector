@@ -135,7 +135,7 @@ What if we can modify our SNI and gain access to different sites? Yes! we can. H
 4. **Install `Nmap`** :
    - Windows don't have `nc`. `Nmap` provides `ncat`
    - Nmap : <a href="https://nmap.org/download.html#windows" traget="_blank">Windows Download Page</a>
-5. **Run `main.py' file** :
+5. **Run `socks5_tunnel.py' file** :
    ```makefile
    python socks5_tennel.py
    ```
