@@ -144,6 +144,28 @@ What if we can modify our SNI and gain access to different sites? Yes! we can. H
    ```bash
    ssh -C -o "ProxyCommand=ncat --verbose --proxy 127.0.0.1:9092 %h %p" [SERVER_USERNAME]@[SERVER_PUBLIC_IP] -p 443 -CND 1080 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
    ```
+   **or**
+   - Without using `[SERVER_PASSWORD]`. Create ssh key-pair.
+   1. Create client side ssh key-pair.
+   ```bash
+   ssh-keygen -r rsa
+   ```
+   2. Copy to rsa public key to serve's authorized_keys
+   ```bash
+   scp C:\Users\[CLIENT_USER]\.ssh [SERVER_USERNAME]@[SERVER_PUBLIC_IP]:/home/[SERVER_USER]/.ssh/authorized_keys
+   ```
+   3. Run `ssh` command
+   ```bash
+   ssh -C -o "ProxyCommand=ncat --verbose --proxy 127.0.0.1:9092 %h %p" [SERVER_USERNAME]@[SERVER_PUBLIC_IP] -p 443 -CND 1080 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
+   ```
+   
 7. **Use** :
-   - Active proxy on Browser (`firefox`) : Add SOCKS Host : `127.0.0.1` Port : `1080` and Select `SOCKSv5` 
+   - Active proxy on Browser (`firefox`) : Add SOCKS Host : `127.0.0.1` Port : `1080` and Select `SOCKSv5` <br>
+**or**
+   - **Add socks5 to Windows**
+   -`Control Panel --> Network and Internet --> Internet Options --> Connection Tab`
+   -`Lan Settings --> Inside Proxy Server Tik the radio box --> Advanced`
+   -`socks : 127.0.0.1 : 1080 --> Ok` <br><br>
+   Tip : If you not using proxy make sure to untik `Inside Proxy Server radio box`
+
    
