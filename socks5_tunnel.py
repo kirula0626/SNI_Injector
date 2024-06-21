@@ -1,4 +1,4 @@
-import time, select, threading, time, select, configparser, ssl, os, certifi, socket, warnings
+import time, select, threading, time, select, configparser, ssl, os, certifi, socket, warnings, hashlib, subprocess
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 
 class Tunnel():
@@ -92,13 +92,27 @@ class Tunnel():
                     thread = threading.Thread(target=self.destination, args=(client, address)).start()
                 except KeyboardInterrupt:
                     print("\n[*] Exiting...")  
-                    if os.path.exists("logs.txt"):os.remove("logs.txt")
+                    if os.path.exists("logs"):os.remove("logs")
                     break
 
     def logs(self, log):
+        
+        #logtime = str(time.ctime()).split()[3]
+        #logfile = open('logs', 'a')
+        #logfile.write(f'[{logtime}] : {str(log)}\n')
+        
         logtime = str(time.ctime()).split()[3]
-        logfile = open('logs.txt', 'a')
-        logfile.write(f'[{logtime}] : {str(log)}\n')
+        log_hash = hashlib.sha256(log.encode()).hexdigest()  # Compute SHA-256 hash of the log
+        with open('logs', 'a') as logfile:
+            logfile.write(f'[{logtime}] : {log_hash}\n')
+        
+        # Function to make the file hidden (Windows specific)
+        def make_hidden(file_path):
+            # Use attrib command to set the hidden attribute
+            subprocess.run(['attrib', '+h', file_path], shell=True)
+        
+        # Make 'logs' hidden after writing
+        make_hidden('logs')
 
 
 if __name__ == '__main__':
