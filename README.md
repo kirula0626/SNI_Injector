@@ -69,7 +69,7 @@ What if we can modify our SNI and gain access to different sites? Yes! we can. H
    ```bash
    pip install -r requirements.txt
    ```
-4. **Edit the `ssh.sh` Script** :
+4. **Edit the `ssh_tunnel.sh` Script** :
    - Auto login and manual login. Uncomment wanted method.
 ```makefile
    #-Auto login with password
@@ -81,7 +81,7 @@ What if we can modify our SNI and gain access to different sites? Yes! we can. H
    ```bash
    apt-get install sshpass
    ```
-5. **Run `ssh.sh`script**
+5. **Run `ssh_tunnel.sh`script**
 6. **Install `Proxychains`** :
    ```bash
    apt-get install proxychains4
@@ -137,7 +137,7 @@ What if we can modify our SNI and gain access to different sites? Yes! we can. H
    - Nmap : <a href="https://nmap.org/download.html#windows" traget="_blank">Windows Download Page</a>
 5. **Run `main.py' file** :
    ```makefile
-   python main.py
+   python socks5_tennel.py
    ```
 6. **Run `ssh`** :
    - Windows don't have `sshpass`. Manual Method using `ssh`. To establish connection type `[SERVER_SSH_PASSWORD]` 
