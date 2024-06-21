@@ -17,30 +17,30 @@ What if we can modify our SNI and gain access to different sites? Yes! we can. H
    - Ensure that ports `22` and `443` are open on your server.
 
 2. **Install `stunnel`** :
-   ```bash
-   sudo apt-get install stunnel4 -y
-   ```
+      ```bash
+      sudo apt-get install stunnel4 -y
+      ```
 3. **Create `stunnel.conf` File** 
    - Navigate to the `/etc/stunnel` directory and create the `stunnel.conf` file :
-   ```bash
-   sudo nano /etc/stunnel/stunnel.conf
-   ```
+      ```bash
+      sudo nano /etc/stunnel/stunnel.conf
+      ```
 4. **Edit `stunnel.conf`**
    - Add the following configuration to `stunnel.conf` :
-   ```makefile
-   client = no
-   [stunnel]
-   accept = 443
-   connect = 127.0.0.1:22
-   cert = /etc/stunnel/stunnel.pem
-   ```
+      ```makefile
+     client = no
+     [stunnel]
+     accept = 443
+     connect = 127.0.0.1:22
+     cert = /etc/stunnel/stunnel.pem
+      ```
 5. **Create SSL Certificates** :
    - Generate an SSL certificate file (`stunnel.pem`) and place it in the `/etc/stunnel `directory.
-   ```bash
-   openssl genrsa -out key.pem 2048
-   openssl req -new -x509 -key key.pem -out cert.pem -days 1095
-   cat key.pem cert.pem >> /etc/stunnel/stunnel.pem
-   ```
+      ```bash
+      openssl genrsa -out key.pem 2048
+      openssl req -new -x509 -key key.pem -out cert.pem -days 1095
+      cat key.pem cert.pem >> /etc/stunnel/stunnel.pem
+      ```
 6. **Restart `stunnel`** :
    ```bash
    /etc/init.d/stunnel4 restart
@@ -66,34 +66,34 @@ What if we can modify our SNI and gain access to different sites? Yes! we can. H
    ```
 3. **Install the Requirements** :
    - To Requirements need `python` and `pip`
-   ```bash
-   pip install -r requirements.txt
-   ```
+      ```bash
+      pip install -r requirements.txt
+      ```
 4. **Edit the `ssh_tunnel.sh` Script** :
    - Auto login and manual login. Uncomment wanted method.
-```makefile
-   #-Auto login with password
-   #sshpass -p [SERVER_SSH_PASSWORD] ssh -C -o "ProxyCommand=nc -X CONNECT -x 127.0.0.1:9092 %h %p" [SERVER_USERNAME]@[SERVER_PUBLIC_IP] -p 443 -v -CND 1080 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
-   #-Manual login
-   #ssh -C -o "ProxyCommand=nc -X CONNECT -x 127.0.0.1:9092 %h %p" [SERVER_USERNAME]@[SERVER_PUBLIC_IP] -p 443 -CND 1080 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
-   ```
+      ```makefile
+      #-Auto login with password
+      #sshpass -p [SERVER_SSH_PASSWORD] ssh -C -o "ProxyCommand=nc -X CONNECT -x 127.0.0.1:9092 %h %p" [SERVER_USERNAME]@[SERVER_PUBLIC_IP] -p 443 -v -CND 1080 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
+      #-Manual login
+      #ssh -C -o "ProxyCommand=nc -X CONNECT -x 127.0.0.1:9092 %h %p" [SERVER_USERNAME]@[SERVER_PUBLIC_IP] -p 443 -CND 1080 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
+      ```
    - For Auto login need `sshpass` tool :
-   ```bash
-   apt-get install sshpass
-   ```
+      ```bash
+      apt-get install sshpass
+      ```
 5. **Run `ssh_tunnel.sh`script**
 6. **Install `Proxychains`** :
    ```bash
    apt-get install proxychains4
    ```
    - Edit `proxychains` conf file :
-   ```bash
-   sudo nano /etc/proxychains4.conf
-   ```
+      ```bash
+      sudo nano /etc/proxychains4.conf
+      ```
    - At the end, add this line  : 
-   ```makefile
-   socks5  127.0.0.1 1080
-   ```
+      ```makefile
+      socks5  127.0.0.1 1080
+      ```
 7. **Check `Proxychains`** :
    ```bash
    proxychains4 curl ifconfig.me
@@ -105,9 +105,9 @@ What if we can modify our SNI and gain access to different sites? Yes! we can. H
    or
  
    2. Open using `proxychains4` : 
-   ```bash
-   proxychains4 firefox
-   ```
+     ```bash
+     proxychains4 firefox
+     ```
 
 # Windows
 ## Client Side 
@@ -129,37 +129,41 @@ What if we can modify our SNI and gain access to different sites? Yes! we can. H
    ```
 3. **Install the Requirements** :
    - To Requirements need `python` and `pip`
-   ```bash
-   pip install -r requirements.txt
-   ```
+      ```bash
+      pip install -r requirements.txt
+      ```
 4. **Install `Nmap`** :
    - Windows don't have `nc`. `Nmap` provides `ncat`
    - Nmap : <a href="https://nmap.org/download.html#windows" traget="_blank">Windows Download Page</a>
-5. **Run `socks5_tunnel.py' file** :
-   ```makefile
-   python socks5_tennel.py
-   ```
-6. **Run `ssh`** :
-   - Windows don't have `sshpass`. Manual Method using `ssh`. To establish connection type `[SERVER_SSH_PASSWORD]` 
-   ```bash
-   ssh -C -o "ProxyCommand=ncat --verbose --proxy 127.0.0.1:9092 %h %p" [SERVER_USERNAME]@[SERVER_PUBLIC_IP] -p 443 -CND 1080 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
-   ```
-   **or**
-   - Without using `[SERVER_PASSWORD]`. Create ssh key-pair.
-   1. Create client side ssh key-pair.
-   ```bash
-   ssh-keygen -r rsa
-   ```
-   2. Copy to rsa public key to serve's authorized_keys
-   ```bash
-   scp C:\Users\[CLIENT_USER]\.ssh [SERVER_USERNAME]@[SERVER_PUBLIC_IP]:/home/[SERVER_USER]/.ssh/authorized_keys
-   ```
-   3. Run `ssh` command
-   ```bash
-   ssh -C -o "ProxyCommand=ncat --verbose --proxy 127.0.0.1:9092 %h %p" [SERVER_USERNAME]@[SERVER_PUBLIC_IP] -p 443 -CND 1080 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
-   ```
-   
-7. **Use** :
+
+5. **Auto / Manual Method** :
+   1. **Manual Method**
+      1. **Run `socks5_tunnel.py' file** :
+         ```makefile
+         python socks5_tennel.py
+         ```
+      2. **Run `ssh`** :
+         - Windows don't have `sshpass`. Manual Method using `ssh`. To establish connection type `[SERVER_SSH_PASSWORD]` 
+            ```bash
+            ssh -C -o "ProxyCommand=ncat --verbose --proxy 127.0.0.1:9092 %h %p" [SERVER_USERNAME]@[SERVER_PUBLIC_IP] -p 443 -CND 1080 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
+            ```
+      **or**
+   2. **Automation Method** :
+      -  Create ssh key-pair.
+      1. Create client side ssh key-pair.
+         ```bash
+         ssh-keygen -r rsa
+         ```
+      2. Copy to rsa public key to serve's authorized_keys
+         ```bash
+         scp C:\Users\[CLIENT_USER]\.ssh [SERVER_USERNAME]@[SERVER_PUBLIC_IP]:/home/[SERVER_USER]/.ssh/authorized_keys
+         ```
+      3. New user must enter `[SERVER_USERNAME]` and `[SERVER_PUBLIC_IP]` to prompt. It will save for future logins.
+           ```bash
+          ssh_tunnel.exe
+           ```
+
+6.**Use** :
    - Active proxy on Browser (`firefox`) : Add SOCKS Host : `127.0.0.1` Port : `1080` and Select `SOCKSv5` <br>
 **or**
    - **Add socks5 to Windows**
