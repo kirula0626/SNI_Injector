@@ -5,7 +5,7 @@ test=$(netstat -tulpn | grep 9092 | cut -d "/" -f 1 | cut -d "N" -f 2 )
 kill -9 $test;
 
 #-Main tunnel
-python main.py &
+python socks5_tunnel.py &
 sleep 3
 
 #-Auto login with password
