@@ -162,10 +162,10 @@ What if we can modify our SNI and gain access to different sites? Yes! we can. H
 7. **Use** :
    - Active proxy on Browser (`firefox`) : Add SOCKS Host : `127.0.0.1` Port : `1080` and Select `SOCKSv5` <br>
 **or**
-   - **Add socks5 to Windows**<br>
-   -`Control Panel --> Network and Internet --> Internet Options --> Connection Tab`
-   -`Lan Settings --> Inside Proxy Server Tik the radio box --> Advanced`
-   -`socks : 127.0.0.1 : 1080 --> Ok` <br><br>
+   - **Add socks5 to Windows**
+   - `Control Panel --> Network and Internet --> Internet Options --> Connection Tab`
+   - `Lan Settings --> Inside Proxy Server Tik the radio box --> Advanced`
+   - `socks : 127.0.0.1 : 1080 --> Ok` <br><br>
    Tip : If you not using proxy make sure to untik `Inside Proxy Server radio box`
 
    
