@@ -156,7 +156,7 @@ What if we can modify our SNI and gain access to different sites? Yes! we can. H
          ```
       2. Copy to rsa public key to serve's authorized_keys
          ```bash
-         scp C:\Users\[CLIENT_USER]\.ssh [SERVER_USERNAME]@[SERVER_PUBLIC_IP]:/home/[SERVER_USER]/.ssh/authorized_keys
+         scp C:\Users\[CLIENT_USER]\.ssh\id_rsa.pub [SERVER_USERNAME]@[SERVER_PUBLIC_IP]:/home/[SERVER_USER]/.ssh/authorized_keys
          ```
       3. New user must enter `[SERVER_USERNAME]` and `[SERVER_PUBLIC_IP]` to prompt. It will save for future logins.
            ```bash
