@@ -152,7 +152,7 @@ What if we can modify our SNI and gain access to different sites? Yes! we can. H
       -  Create ssh key-pair.
       1. Create client side ssh key-pair.
          ```bash
-         ssh-keygen -r rsa
+         ssh-keygen -t rsa
          ```
       2. Copy to rsa public key to serve's authorized_keys
          ```bash
